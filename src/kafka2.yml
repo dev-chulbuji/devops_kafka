@@ -1,0 +1,11 @@
+---
+- hosts: zkhosts
+  become: true
+  connection: ssh
+  vars:
+    - brokerid: "{{ inventory_hostname | regex_search('(dj-zk0[1-9]\\.foo\\.bar)') | regex_replace('\\.foo\\.bar', '') | regex_replace('^dj-zk0', '') }}"
+    - zookeeperinfo: dj-zk01.foo.bar:2181,dj-zk02.foo.bar:2181,dj-zk03.foo.bar:2181/kafka2
+    - dir_path: /data/kafka2-logs
+  roles:
+    - common
+    - kafka
