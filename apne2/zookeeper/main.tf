@@ -11,7 +11,7 @@ module "ec2" {
   subnet_id                   = element(local.public_subnet_ids, count.index % 2)
   vpc_security_group_ids      = [module.ssh.security_group_id, local.default_sg_id]
   iam_instance_profile        = module.iam.iam_instance_profile_name
-  associate_public_ip_address = false
+  associate_public_ip_address = true
   private_ip                  = var.private_ips[count.index]
 
   user_data = data.template_file.userdata.rendered
